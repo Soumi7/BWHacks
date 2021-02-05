@@ -1,4 +1,9 @@
-from flask import Flask
+"""This module performs the following steps sequentially:
+    1. Reads in existing account IDs (if any) from the bank database.
+    2. Creates additional accounts with randomly generated IDs. Then, it adds a bit of money to each new account.
+    3. Chooses two accounts at random and takes half of the money from the first and deposits it into the second.
+"""
+
 import random
 from math import floor
 from sqlalchemy import create_engine, Column, Integer
@@ -8,7 +13,7 @@ from cockroachdb.sqlalchemy import run_transaction
 
 Base = declarative_base()
 
-app = Flask(__name__)
+
 
 class Account(Base):
     """The Account class corresponds to the "accounts" database table.
@@ -26,12 +31,11 @@ class Account(Base):
 
 engine = create_engine(
     # For cockroach demo:
-    'cockroachdb://<username>:<password>@<hostname>:<port>/bank?sslmode=require',
-    # For CockroachCloud:
-    # 'cockroachdb://<username>:<password>@<globalhost>:26257/<cluster_name>.bank?sslmode=verify-full&sslrootcert=<certs_dir>/<ca.crt>',
+    'cockroachdb://soumi:soumi@127.0.0.1:38611/bank?sslmode=require',
     echo=True                   # Log SQL queries to stdout
 )
 
+# Automatically create the "accounts" table based on the Account class.
 Base.metadata.create_all(engine)
 
 
