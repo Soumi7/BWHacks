@@ -13,8 +13,6 @@ from cockroachdb.sqlalchemy import run_transaction
 
 Base = declarative_base()
 
-
-
 class Account(Base):
     """The Account class corresponds to the "accounts" database table.
     """
@@ -97,7 +95,3 @@ def transfer_funds_randomly(session):
         {"balance": (Account.balance + amount)}
     )
 
-
-# Run the transfer inside a transaction.
-
-run_transaction(sessionmaker(bind=engine), transfer_funds_randomly)
