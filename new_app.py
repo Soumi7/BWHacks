@@ -1,4 +1,5 @@
 import psycopg2
+from flask import Flask
 
 conn = psycopg2.connect(
     database='bank',
@@ -10,6 +11,8 @@ conn = psycopg2.connect(
     port=26257,
     host='localhost'
 )
+
+app = Flask(__name__)
 
 # conn is a psycopg2 connection
 
